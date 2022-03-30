@@ -1,31 +1,31 @@
 #!/usr/bin/env python
 
 import sys
-#import RPi.GPIO as GPIO
+import RPi.GPIO as GPIO
 from PyQt5.QtWidgets import QMainWindow, QApplication, QAction, QWidget
 from PyQt5.QtWidgets import QGridLayout, QPushButton, QRadioButton
 from PyQt5.QtCore import QCoreApplication, QTimer
 
 # allocated pin numbers
-RED = 8
-BLUE = 12
-GREEN = 16
+RED = 36
+BLUE = 22
+GREEN = 8
 
 
 class LED:
     def __init__(self, pins):
-        #GPIO.setwarnings(False)
-        #GPIO.setmode(GPIO.BOARD) # use physical pin numbering
+        GPIO.setwarnings(False)
+        GPIO.setmode(GPIO.BOARD) # use physical pin numbering
         for pin in pins:
-            #GPIO.setup(pin, GPIO.OUT, initial = GPIO.LOW)
             print("Setup pin", pin)
+            GPIO.setup(pin, GPIO.OUT, initial = GPIO.LOW)
 
     def on(self, pin):
-        #GPIO.output(LED, GPIO.HIGH) # on
+        GPIO.output(pin, GPIO.HIGH) # on
         print("LED on", pin)
 
     def off(self, pin):
-        #GPIO.output(LED, GPIO.LOW) # off
+        GPIO.output(pin, GPIO.LOW) # off
         print("LED off", pin)
 
 
@@ -49,12 +49,12 @@ class App(QMainWindow):
         self.radio1 = QRadioButton("Red")
         self.radio1.pin = RED
         self.radio1.toggled.connect(self.toggle)
-        self.radio2 = QRadioButton("Blue")
-        self.radio2.pin = BLUE
+        self.radio2 = QRadioButton("Green")
+        self.radio2.pin = GREEN
         self.radio2.toggled.connect(self.toggle)
-        self.radio3 = QRadioButton("Green")
+        self.radio3 = QRadioButton("Blue")
         self.radio3.toggled.connect(self.toggle)
-        self.radio3.pin = GREEN
+        self.radio3.pin = BLUE
 
         # Create quit button
         self.finish = QPushButton('Quit', self)
